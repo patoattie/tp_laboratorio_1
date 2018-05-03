@@ -77,7 +77,7 @@ int buscarPorDni(EPersona lista[], int dni)
 
 void EPersona_mostrarUno(EPersona parametro)
 {
-     printf("\n %8d - %s - %3d", parametro.dni, parametro.nombre, parametro.edad);
+     printf("\n %d - %s - %d", parametro.dni, parametro.nombre, parametro.edad);
 
 }
 
@@ -199,6 +199,7 @@ int EPersona_alta(EPersona lista[])
             retorno = 0;
             //OK
             lista[indice] = temporario;
+            printf("Alta Exitosa\n");
         }
         else //retorno = -3
         {
@@ -229,7 +230,7 @@ int EPersona_baja(EPersona lista[])
         switch(muestraListado)
         {
         case 0:
-            printf("\nNo hay personas para dar de baja"); //retorno = -2
+            printf("\nNo hay personas para dar de baja"); //retorno = -1
             break;
         case 1:
             dni = pedirEnteroSinValidar("\nIngrese DNI a borrar: ");
@@ -258,6 +259,7 @@ int EPersona_baja(EPersona lista[])
                     retorno = 0;
                     //OK
                     lista[indice].estado = BAJA;
+                    printf("Baja Exitosa\n");
                 }
                 else //retorno = -2
                 {
@@ -268,7 +270,7 @@ int EPersona_baja(EPersona lista[])
 
             break;
         default:
-            printf("\Error al listar...\n"); //retorno = -2
+            printf("\Error al listar...\n"); //retorno = -1
             break;
         }
     } while(indice < 0 && muestraListado == 1 && cancelaAccion == 0);
@@ -276,7 +278,7 @@ int EPersona_baja(EPersona lista[])
     return retorno;
 }
 
-int validarEnteroDecimal(float numero)
+int validarEnteroDecimal(double numero)
 {
     int numeroEntero = (int)numero;
     int retorno;
@@ -296,13 +298,13 @@ int validarEnteroDecimal(float numero)
 int pedirEntero(char mensaje[], int minimo, int maximo)
 {
     int numero;
-    float ingreso;
+    double ingreso;
     int esDecimal;
 
     printf("%s", mensaje);
     do
     {
-        scanf("%f", &ingreso);
+        scanf("%lf", &ingreso);
         esDecimal = validarEnteroDecimal(ingreso);
         if(esDecimal == 1)
         {
@@ -330,13 +332,13 @@ int validarEntero(int dato, int minimo, int maximo)
 int pedirEnteroSinValidar(char mensaje[])
 {
     int numero;
-    float ingreso;
+    double ingreso;
     int esDecimal;
 
     printf("%s", mensaje);
     do
     {
-        scanf("%f", &ingreso);
+        scanf("%lf", &ingreso);
         esDecimal = validarEnteroDecimal(ingreso);
         if(esDecimal == 1)
         {
@@ -344,7 +346,7 @@ int pedirEnteroSinValidar(char mensaje[])
         }
     } while(esDecimal == 1);
 
-    numero = ingreso / 1;
+    numero = (int)ingreso;
 
     return numero;
 }

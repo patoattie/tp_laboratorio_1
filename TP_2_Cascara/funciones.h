@@ -13,11 +13,10 @@ typedef struct {
 
 }EPersona;
 
-/** \brief
- *
- * \param lista[] EPersona
+/** \brief Inicializa el vector de personas, estableciendo el flag de estado como LIBRE,
+ *         para dejar listas todas las posiciones del vector en condiciones de albergar datos.
+ * \param lista[] EPersona -> Vector de personas a inicializar.
  * \return void
- *
  */
 void EPersona_init(EPersona lista[]);
 
@@ -36,63 +35,77 @@ int obtenerEspacioLibre(EPersona lista[]);
  */
 int buscarPorDni(EPersona lista[], int dni);
 
-/** \brief
- *
- * \param parametro EPersona
+/** \brief Muestra por pantalla un elemento del vector de personas, siempre que no esté dado de BAJA ni que sea un elemento LIBRE.
+ *         Formato: DNI - Nombre - Edad
+ * \param parametro EPersona -> Elemento a mostrar por pantalla.
  * \return void
  *
  */
 void EPersona_mostrarUno(EPersona parametro);
 
-/** \brief
- *
- * \param parametro EPersona
+/** \brief Muestra por pantalla un elemento del vector de personas. Muestra tanto elementos OCUPADOS como dados de BAJA.
+ *         Formato, si el estado del elemento es OCUPADO: DNI - Nombre - Edad
+ *         Formato, si el estado del elemento es BAJA: DNI - Nombre - Edad - [Estado]
+ * \param parametro EPersona -> Elemento a mostrar por pantalla.
  * \return void
  *
  */
 void EPersona_mostrarUnoConEstado(EPersona parametro);
 
-/** \brief
- *
- * \param lista[] EPersona
- * \return int
- *
+/** \brief Recorre el vector de personas en forma secuencial desde la primera posición hasta la última,
+ *         imprimiendo en ese orden por pantalla los elementos con estado OCUPADO mediante la invocación
+ *         a la función EPersona_mostrarUno.
+ * \param lista[] EPersona -> Vector de personas a mostrar por pantalla.
+ * \return int 0 -> Si no encontró personas para mostrar, imprime por pantalla mensaje indicando tal situación.
+ *             1 -> Se muestra al menos una persona.
  */
 int EPersona_mostrarListadoConOcupados(EPersona lista[]);
 
-/** \brief
- *
- * \param lista[] EPersona
- * \return int
- *
+/** \brief Recorre el vector de personas en forma secuencial desde la primera posición hasta la última,
+ *         imprimiendo en ese orden por pantalla tanto elementos OCUPADOS como dados de BAJA mediante
+ *         la invocación a la función EPersona_mostrarUnoConEstado.
+ * \param lista[] EPersona -> Vector de personas a mostrar por pantalla.
+ * \return int 0 -> Si no encontró personas para mostrar, imprime por pantalla mensaje indicando tal situación.
+ *             1 -> Se muestra al menos una persona.
  */
 int EPersona_mostrarListado(EPersona lista[]);
 
-/** \brief
- *
- * \param lista[] EPersona
- * \return int
- *
+/** \brief Da de alta una persona en la primera posición del vector con estado LIBRE que haya disponible.
+ *         Si no hay disponible utiliza la primera posición del vector con una persona dada de BAJA.
+ *         Si tampoco hay disponibilidad muestra un mensaje de error informando que no hay lugar disponible.
+ *         Para el alta se pide el ingreso al usuario por teclado de los tres campos editables de la estructura:
+ *         dni -> valida que sea un numero mayor a cero.
+ *         nombre -> valida que no se ingrese una cadena vacía.
+ *         edad -> valida un entero entre 1 y 120.
+ *         El estado lo setea la función a OCUPADO.
+ * \param lista[] EPersona -> Vector de personas donde se ingresará el nuevo dato.
+ * \return int  0 -> Alta OK.
+ *             -1 -> No hay espacio suficiente para agregar personas.
+ *             -3 -> Acción cancelada por el usuario.
  */
 int EPersona_alta(EPersona lista[]);
 
-/** \brief
- *
- * \param lista[] EPersona
- * \return int
- *
+/** \brief Da de baja lógica una persona, para ello se le muestra al usuario un listado de las personas
+ *         dadas de alta actualmente invocando a la función EPersona_mostrarListadoConOcupados y se le pide al usuario
+ *         que ingrese el DNI de la persona a dar de baja. Si el DNI ingresado no existe muestra el error
+ *         y se pide reingreso. Una vez ingresado un DNI existente se muestra al usuario los datos de la
+ *         persona a dar de baja invocando a la función EPersona_mostrarUno, y se le pide que confirme (S) o
+ *         descarte (N) la baja a realizar.
+ * \param lista[] EPersona -> Vector de personas desde donde el usuario elegirá el elemento a dar de baja.
+ * \return int  0 -> Baja OK.
+ *             -1 -> No hay personas disponibles para dar de baja.
  */
 int EPersona_baja(EPersona lista[]);
 
 /** \brief Valida si un número pasado por parámetro es entero o decimal.
  *
- * \param float Número que se va a validar.
+ * \param double Número que se va a validar.
  * \return int Resultado de la validación:
  *             0 -> El número es entero.
  *             1 -> El número es decimal.
  *
  */
-int validarEnteroDecimal(float);
+int validarEnteroDecimal(double);
 
 /** \brief Pide un número entero al usuario y lo valida
  *
