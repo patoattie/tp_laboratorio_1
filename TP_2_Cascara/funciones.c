@@ -3,11 +3,6 @@
 #include <string.h>
 #include "funciones.h"
 
-#define OCUPADO 0
-#define LIBRE 1
-#define BAJA 2
-#define STR_BUFFER 100
-
 void EPersona_init(EPersona lista[])
 {
     int i;
@@ -391,4 +386,24 @@ void limpiarPantalla(void)
 void pausarEjecucion(void)
 {
     system("pause");
+}
+
+void ordenarVectorMenorMayor(EPersona vector[])
+{
+    int i;
+    int j;
+    EPersona auxiliar;
+
+    for(i = 0; i < CANTIDAD - 1; i++)
+    {
+        for(j = i + 1; j < CANTIDAD; j++)
+        {
+            if(stricmp(vector[i].nombre, vector[j].nombre) > 0) //Criterio de ordenamiento
+            {
+                auxiliar = vector[i];
+                vector[i] = vector[j];
+                vector[j] = auxiliar;
+            }
+        }
+    }
 }

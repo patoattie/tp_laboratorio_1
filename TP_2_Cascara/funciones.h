@@ -3,6 +3,10 @@
 
 #define TAM_NOMBRE 50
 #define CANTIDAD 20
+#define OCUPADO 0
+#define LIBRE 1
+#define BAJA 2
+#define STR_BUFFER 100
 
 typedef struct {
 
@@ -170,5 +174,7 @@ void limpiarPantalla(void);
  *
  */
 void pausarEjecucion(void);
+
+void ordenarVectorMenorMayor(EPersona[]);
 
 #endif // FUNCIONES_H_INCLUDED
