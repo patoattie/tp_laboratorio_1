@@ -407,3 +407,23 @@ void ordenarVectorMenorMayor(EPersona vector[])
         }
     }
 }
+
+void ordenarVectorMayorMenor(int vector[])
+{
+    int i;
+    int j;
+    int auxiliar;
+
+    for(i = 0; i < CANTIDAD - 1; i++)
+    {
+        for(j = i + 1; j < CANTIDAD; j++)
+        {
+            if(vector[i] < vector[j]) //Criterio de ordenamiento
+            {
+                auxiliar = vector[i];
+                vector[i] = vector[j];
+                vector[j] = auxiliar;
+            }
+        }
+    }
+}

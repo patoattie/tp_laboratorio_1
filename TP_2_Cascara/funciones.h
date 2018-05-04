@@ -175,6 +175,20 @@ void limpiarPantalla(void);
  */
 void pausarEjecucion(void);
 
+/** \brief
+ *
+ * \param EPersona[]
+ * \return void
+ *
+ */
 void ordenarVectorMenorMayor(EPersona[]);
+
+/** \brief
+ *
+ * \param EPersona[]
+ * \return void
+ *
+ */
+void ordenarVectorMayorMenor(int[]);
 
 #endif // FUNCIONES_H_INCLUDED

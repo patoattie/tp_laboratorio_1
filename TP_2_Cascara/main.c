@@ -4,6 +4,7 @@
 #include "funciones.h"
 
 void muestraOrdenadoPorNombre(EPersona[]);
+void muestraGraficoBarras(EPersona[]);
 
 int main()
 {
@@ -92,4 +93,55 @@ void muestraOrdenadoPorNombre(EPersona lista[])
     {
         printf("\n*** NO HAY PERSONAS PARA MOSTRAR ***");
     }
+}
+
+void muestraGraficoBarras(EPersona lista[])
+{
+    /*
+    Posicion 0 -> <18
+    Posicion 1 -> >=18 && <=35
+    Posicion 2 -> >35
+    */
+    int grupos[3] = {}; //Inicializo el vector en cero.
+    int posicion;
+    int i;
+    int hayPersonas = 0;
+
+    //Cuento las personas con estado OCUPADO de acuerdo a su edad.
+    for(i = 0; i < CANTIDAD; i++)
+    {
+        if(lista[i].estado == OCUPADO)
+        {
+            hayPersonas = 1; //Hallé al menos una persona
+
+            if(lista[i].edad < 18)
+            {
+                posicion = 0;
+            }
+            else if(lista[i].edad >= 18 && lista[i].edad <= 35)
+            {
+                posicion = 1;
+            }
+            else //>35
+            {
+                posicion = 2;
+            }
+
+            grupos[posicion]++; //Voy contando según rango de edad.
+        }
+    }
+
+    if(hayPersonas == 1)
+    {
+        //Ordeno el vector resultante
+        ordenarVectorMayorMenor(grupos);
+
+
+    }
+    else
+    {
+        printf("\n*** NO HAY PERSONAS PARA MOSTRAR ***");
+    }
+
+
 }
