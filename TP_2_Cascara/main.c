@@ -41,6 +41,7 @@ int main()
                 muestraOrdenadoPorNombre(listaPersonas);
                 break;
             case 4:
+                muestraGraficoBarras(listaPersonas);
                 break;
             case 5:
                 seguir = 'n';
@@ -102,10 +103,12 @@ void muestraGraficoBarras(EPersona lista[])
     Posicion 1 -> >=18 && <=35
     Posicion 2 -> >35
     */
-    int grupos[3] = {}; //Inicializo el vector en cero.
+    int columna[3] = {}; //Inicializo el vector en cero.
     int posicion;
     int i;
     int hayPersonas = 0;
+    int nFila; //Guarda el numero de fila a imprimir
+    char elementoGrafico[3];
 
     //Cuento las personas con estado OCUPADO de acuerdo a su edad.
     for(i = 0; i < CANTIDAD; i++)
@@ -127,21 +130,44 @@ void muestraGraficoBarras(EPersona lista[])
                 posicion = 2;
             }
 
-            grupos[posicion]++; //Voy contando según rango de edad.
+            columna[posicion]++; //Voy contando según rango de edad.
         }
     }
 
     if(hayPersonas == 1)
     {
-        //Ordeno el vector resultante
-        ordenarVectorMayorMenor(grupos);
+        /*
+        Tomo como cantidad maxima a imprimir el maximo hallado para un rango de edad, representado por una columna del gráfico.
+        Dicho rango siempre imprime un elemento en su correspondiente columna del gráfico.
+        Los demás rango imprimirán siempre que su cantidad sea mayor o igual al numero de fila a imprimir
+        */
+        nFila = buscarMaximo(columna, 3);
 
+        while(nFila > 0)
+        {
+            for(i = 0; i < 3; i++)
+            {
+                if(columna[i] >= nFila)
+                {
+                    elementoGrafico[i] = '*';
+                }
+                else
+                {
+                    elementoGrafico[i] = ' ';
+                }
 
+                printf("  %c  ", elementoGrafico[i]);
+            }
+            //Bajo una fila, corto cuando termino de imprimir la fila 1
+            nFila--;
+            printf("\n");
+        }
+
+        printf("---------------\n");
+        printf(" <18 18-35 >35 ");
     }
     else
     {
         printf("\n*** NO HAY PERSONAS PARA MOSTRAR ***");
     }
-
-
 }

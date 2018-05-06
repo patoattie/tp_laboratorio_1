@@ -408,22 +408,20 @@ void ordenarVectorMenorMayor(EPersona vector[])
     }
 }
 
-void ordenarVectorMayorMenor(int vector[])
+int buscarMaximo(int vector[], int tamanio)
 {
     int i;
-    int j;
-    int auxiliar;
+    int retorno;
+    int flag = 0;
 
-    for(i = 0; i < CANTIDAD - 1; i++)
+    for(i = 0; i < tamanio; i++)
     {
-        for(j = i + 1; j < CANTIDAD; j++)
+        if((vector[i] > retorno) || flag == 0)
         {
-            if(vector[i] < vector[j]) //Criterio de ordenamiento
-            {
-                auxiliar = vector[i];
-                vector[i] = vector[j];
-                vector[j] = auxiliar;
-            }
+            retorno = vector[i];
+            flag = 1;
         }
     }
+
+    return retorno;
 }

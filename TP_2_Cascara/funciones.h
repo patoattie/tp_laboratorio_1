@@ -185,10 +185,11 @@ void ordenarVectorMenorMayor(EPersona[]);
 
 /** \brief
  *
- * \param EPersona[]
- * \return void
+ * \param int[]
+ * \param int
+ * \return int
  *
  */
-void ordenarVectorMayorMenor(int[]);
+int buscarMaximo(int[], int);
 
 #endif // FUNCIONES_H_INCLUDED
