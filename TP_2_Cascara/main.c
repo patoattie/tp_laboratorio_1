@@ -3,7 +3,31 @@
 #include <string.h>
 #include "funciones.h"
 
+/** \brief Ordena el vector de personas por el campo nombre en forma ascendente, en un vector auxiliar
+ *         para no alterar el vector original, invocando a la función ordenarVectorMenorMayor.
+ *         Luego muestra el vector auxiliar ordenado por pantalla mediante la función EPersona_mostrarListado.
+ *         Si no hay personas registradas muestra la advertencia por pantalla.
+ * \param EPersona[] Vector de personas
+ * \return void
+ *
+ */
 void muestraOrdenadoPorNombre(EPersona[]);
+
+/** \brief Dado el vector original como parámetro, se define un vector auxiliar con tres posiciones.
+ *         Se recorre el vector original contando las personas cuyas edades:
+ *         a) Son menores a 18 años y guarda la cuenta en la posición 0 auxiliar. (Columna 1 del gráfico)
+ *         b) Están comprendidas entre 18 y 35 años inclusive guardando la cuenta en la posición 1 auxiliar. (Columna 2 del gráfico)
+ *         c) Son mayores a 35 años y guarda la cuenta en la posición 2 auxiliar. (Columna 3 del gráfico)
+ *         Luego utilizando la función buscarMaximo obtengo el mayor elemento del vector auxiliar.
+ *         Tomando dicho máximo como punto de partida, en una estructura repetitiva implemento un contador reverso
+ *         hasta el número 1 inclusive, y en cada iteración recorro en forma secuencial el vector auxiliar pregunto
+ *         a) Si el elemento es mayor o igual al contador, imprimo un '*'
+ *         b) Sino imprimo un ' ' (espacio en blanco).
+ *         De esa forma se va armando el gráfico de barras.
+ * \param EPersona[] Vector de personas
+ * \return void
+ *
+ */
 void muestraGraficoBarras(EPersona[]);
 
 int main()

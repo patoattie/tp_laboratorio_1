@@ -175,19 +175,19 @@ void limpiarPantalla(void);
  */
 void pausarEjecucion(void);
 
-/** \brief
- *
- * \param EPersona[]
+/** \brief Ordena mediante método de la burbuja un vector de estructura Persona,
+ *         usando como criterio de ordenamiento el campo nombre en forma ascendente.
+ * \param EPersona[] Vector de personas
  * \return void
  *
  */
 void ordenarVectorMenorMayor(EPersona[]);
 
-/** \brief
+/** \brief Busca el máximo valor en un vector de números enteros.
  *
- * \param int[]
- * \param int
- * \return int
+ * \param int[] Vector de números enteros.
+ * \param int Tamaño del vector.
+ * \return int Máximo valor hallado
  *
  */
 int buscarMaximo(int[], int);
