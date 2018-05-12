@@ -194,7 +194,6 @@ int EPersona_alta(EPersona lista[])
             retorno = 0;
             //OK
             lista[indice] = temporario;
-            printf("Alta Exitosa\n");
         }
         else //retorno = -3
         {
@@ -254,7 +253,6 @@ int EPersona_baja(EPersona lista[])
                     retorno = 0;
                     //OK
                     lista[indice].estado = BAJA;
-                    printf("Baja Exitosa\n");
                 }
                 else //retorno = -2
                 {

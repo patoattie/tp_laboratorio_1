@@ -34,6 +34,7 @@ int main()
 {
     char seguir='s';
     int opcion=0;
+    int puntoMenu;
 
     //Declaro array donde guardo los datos de la estructura Persona
     EPersona listaPersonas[CANTIDAD];
@@ -56,10 +57,18 @@ int main()
         switch(opcion)
         {
             case 1:
-                EPersona_alta(listaPersonas);
+                puntoMenu = EPersona_alta(listaPersonas);
+                if(puntoMenu == 0)
+                {
+                    printf("\nAlta de persona OK");
+                }
                 break;
             case 2:
-                EPersona_baja(listaPersonas);
+                puntoMenu = EPersona_baja(listaPersonas);
+                if(puntoMenu == 0)
+                {
+                    printf("\nBaja de persona OK");
+                }
                 break;
             case 3:
                 muestraOrdenadoPorNombre(listaPersonas);

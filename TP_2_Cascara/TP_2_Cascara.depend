@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1525612940 source:f:\mis documentos\escritorio\programacion\utn\programacion 1\tp_laboratorio_1\tp_2_cascara\main.c
+1526087213 source:f:\mis documentos\escritorio\programacion\utn\programacion 1\tp_laboratorio_1\tp_2_cascara\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -7,7 +7,7 @@
 
 1525659508 f:\mis documentos\escritorio\programacion\utn\programacion 1\tp_laboratorio_1\tp_2_cascara\funciones.h
 
-1525611649 source:f:\mis documentos\escritorio\programacion\utn\programacion 1\tp_laboratorio_1\tp_2_cascara\funciones.c
+1526087307 source:f:\mis documentos\escritorio\programacion\utn\programacion 1\tp_laboratorio_1\tp_2_cascara\funciones.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
