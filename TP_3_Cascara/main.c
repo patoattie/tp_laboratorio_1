@@ -10,6 +10,8 @@ int main()
     EMovie movie;
     int agregoPelicula;
     int existePelicula;
+    int borroPelicula;
+    char tituloPelicula[TAM_TITULO];
 
     while(seguir=='s')
     {
@@ -26,9 +28,11 @@ int main()
         switch(opcion)
         {
             case 1:
-                movie = cargarPelicula(&existePelicula);
+                pedirTituloPelicula(tituloPelicula);
+                existePelicula = buscarPelicula(tituloPelicula, &movie);
                 if(existePelicula < 1)
                 {
+                    cargarPelicula(tituloPelicula, &movie);
                     agregoPelicula = agregarPelicula(movie);
                     if(agregoPelicula == 1)
                     {
@@ -45,6 +49,24 @@ int main()
                 }
                 break;
             case 2:
+                pedirTituloPelicula(tituloPelicula);
+                existePelicula = buscarPelicula(tituloPelicula, &movie);
+                if(existePelicula == 1)
+                {
+                    borroPelicula = borrarPelicula(movie);
+                    if(borroPelicula == 1)
+                    {
+                        printf("\nBaja de pelicula OK");
+                    }
+                    else
+                    {
+                        printf("\nNo se pudo borrar la pelicula");
+                    }
+                }
+                else
+                {
+                    printf("\nLa pelicula no existe en el catalogo");
+                }
                 break;
             case 3:
                break;

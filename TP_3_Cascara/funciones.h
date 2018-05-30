@@ -2,9 +2,11 @@
 #define FUNCIONES_H_INCLUDED
 
 #define MODO_LECTURA_BINARIO "rb"
-#define MODO_ESCRITURA_BINARIO "ab"
+#define MODO_ESCRITURA_BINARIO "wb"
+#define MODO_APPEND_BINARIO "ab"
 #define MODO_LECTURA_ESCRITURA_BINARIO "r+b"
 #define PATH_ARCHIVO_PELICULAS "peliculas.dat"
+#define PATH_ARCHIVO_TEMPORAL "peliculas.tmp"
 #define TAM_TITULO 20
 #define TAM_GENERO 20
 #define TAM_DESCRIPCION 250
@@ -114,7 +116,8 @@ int pedirEntero(char[], int, int);
  *
  */
 int validarEntero(int, int, int);
-EMovie cargarPelicula(int*);
-int buscarPelicula(const char*);
+void cargarPelicula(const char*, EMovie*);
+int buscarPelicula(const char*, EMovie*);
+void pedirTituloPelicula(char*);
 
 #endif // FUNCIONES_H_INCLUDED
