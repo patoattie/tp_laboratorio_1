@@ -7,3 +7,17 @@
 
 1527632409 c:\test\pattie\tp_laboratorio_1\tp_3_cascara\funciones.h
 
+1527699851 source:c:\users\pattie\documents\utn\tp_laboratorio_1\tp_3_cascara\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"funciones.h"
+
+1527700346 c:\users\pattie\documents\utn\tp_laboratorio_1\tp_3_cascara\funciones.h
+
+1527700025 source:c:\users\pattie\documents\utn\tp_laboratorio_1\tp_3_cascara\funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"funciones.h"
+

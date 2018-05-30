@@ -17,59 +17,25 @@ int agregarPelicula(EMovie movie)
 {
     int agregoPelicula = 0;
     int abreArchivo;
+    int escribePelicula;
+    int cierraArchivo;
     FILE* pArchivoPeliculas = NULL;
-    EMovie pelicula;
-
-    do
-    {
-        pedirString("Ingrese titulo: ", pelicula.titulo, TAM_TITULO);
-        if(strcmp(pelicula.titulo, "") == 0)
-        {
-            printf("El dato es obligatorio, por favor reingrese\n");
-        }
-    } while(strcmp(pelicula.titulo, "") == 0);
-
-    do
-    {
-        pedirString("Ingrese genero: ", pelicula.genero, TAM_GENERO);
-        if(strcmp(pelicula.genero, "") == 0)
-        {
-            printf("El dato es obligatorio, por favor reingrese\n");
-        }
-    } while(strcmp(pelicula.genero, "") == 0);
-
-    do
-    {
-        pelicula.duracion = pedirEnteroSinValidar("Ingrese duracion en minutos: ");
-        if(pelicula.duracion <= 0)
-        {
-            printf("La duracion en minutos debe ser un numero positivo, por favor reingrese\n");
-        }
-    } while(pelicula.duracion <= 0);
-
-    do
-    {
-        pedirString("Ingrese descripcion: ", pelicula.descripcion, TAM_DESCRIPCION);
-        if(strcmp(pelicula.descripcion, "") == 0)
-        {
-            printf("El dato es obligatorio, por favor reingrese\n");
-        }
-    } while(strcmp(pelicula.descripcion, "") == 0);
-
-    do
-    {
-        pedirString("Ingrese link de la imagen: ", pelicula.linkImagen, TAM_LINK);
-        if(strncmp(pelicula.linkImagen, "http://", 7) != 0 && strncmp(pelicula.linkImagen, "https://", 8) != 0)
-        {
-            printf("No es una URL valida, por favor reingrese\n");
-        }
-    } while(strncmp(pelicula.linkImagen, "http://", 7) != 0 && strncmp(pelicula.linkImagen, "https://", 8) != 0);
-
-    pelicula.puntaje = pedirEntero("Ingrese puntaje del 1 al 10: ", 1, 10);
+    EMovie* pMovie = &movie;
 
     abreArchivo = abrirArchivo(pArchivoPeliculas, PATH_ARCHIVO_PELICULAS, MODO_ESCRITURA_BINARIO);
     if(abreArchivo == 1)
     {
+        escribePelicula = escribirPelicula(pMovie, pArchivoPeliculas);
+        if(escribePelicula == 1)
+        {
+            agregoPelicula = 1;
+        }
+    }
+
+    cierraArchivo = cerrarArchivo(pArchivoPeliculas);
+    if(cierraArchivo < 1)
+    {
+        printf("\nNo se pudo cerrar el archivo");
     }
 
     return agregoPelicula;
@@ -209,4 +175,77 @@ int validarEntero(int dato, int minimo, int maximo)
     }
 
     return dato;
+}
+
+EMovie cargarPelicula(void)
+{
+    EMovie movie;
+
+    do
+    {
+        pedirString("Ingrese titulo: ", movie.titulo, TAM_TITULO);
+        if(strcmp(movie.titulo, "") == 0)
+        {
+            printf("El dato es obligatorio, por favor reingrese\n");
+        }
+    } while(strcmp(movie.titulo, "") == 0);
+
+    do
+    {
+        pedirString("Ingrese genero: ", movie.genero, TAM_GENERO);
+        if(strcmp(movie.genero, "") == 0)
+        {
+            printf("El dato es obligatorio, por favor reingrese\n");
+        }
+    } while(strcmp(movie.genero, "") == 0);
+
+    do
+    {
+        movie.duracion = pedirEnteroSinValidar("Ingrese duracion en minutos: ");
+        if(movie.duracion <= 0)
+        {
+            printf("La duracion en minutos debe ser un numero positivo, por favor reingrese\n");
+        }
+    } while(movie.duracion <= 0);
+
+    do
+    {
+        pedirString("Ingrese descripcion: ", movie.descripcion, TAM_DESCRIPCION);
+        if(strcmp(movie.descripcion, "") == 0)
+        {
+            printf("El dato es obligatorio, por favor reingrese\n");
+        }
+    } while(strcmp(movie.descripcion, "") == 0);
+
+    do
+    {
+        pedirString("Ingrese link de la imagen: ", movie.linkImagen, TAM_LINK);
+        if(strncmp(movie.linkImagen, "http://", 7) != 0 && strncmp(movie.linkImagen, "https://", 8) != 0)
+        {
+            printf("No es una URL valida, por favor reingrese\n");
+        }
+    } while(strncmp(movie.linkImagen, "http://", 7) != 0 && strncmp(movie.linkImagen, "https://", 8) != 0);
+
+    movie.puntaje = pedirEntero("Ingrese puntaje del 1 al 100: ", 1, 100);
+
+    return movie;
+}
+
+int escribirPelicula(EMovie* movie, FILE* pArchivoPeliculas)
+{
+    int retorno = -1;
+    int cantidadEscrita;
+
+    if(pArchivoPeliculas != NULL)
+    {
+        retorno = 0;
+        cantidadEscrita = fwrite(movie, sizeof(movie), 1, pArchivoPeliculas);
+
+        if(cantidadEscrita == 1)
+        {
+            retorno = 1;
+        }
+    }
+
+    return retorno;
 }

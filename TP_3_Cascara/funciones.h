@@ -3,12 +3,13 @@
 
 #define MODO_LECTURA_BINARIO "rb"
 #define MODO_ESCRITURA_BINARIO "ab"
+#define MODO_LECTURA_ESCRITURA_BINARIO "r+b"
 #define PATH_ARCHIVO_PELICULAS "peliculas.dat"
 #define TAM_TITULO 20
 #define TAM_GENERO 20
-#define TAM_DESCRIPCION 50
-#define TAM_LINK 50
-#define STR_BUFFER 100
+#define TAM_DESCRIPCION 250
+#define TAM_LINK 250
+#define STR_BUFFER 400
 
 typedef struct{
     char titulo[TAM_TITULO];
@@ -116,5 +117,7 @@ int pedirEntero(char[], int, int);
  *
  */
 int validarEntero(int, int, int);
+EMovie cargarPelicula(void);
+int escribirPelicula(EMovie*, FILE*);
 
 #endif // FUNCIONES_H_INCLUDED

@@ -7,6 +7,8 @@ int main()
 {
     char seguir='s';
     int opcion=0;
+    EMovie movie;
+    int agregoPelicula;
 
     while(seguir=='s')
     {
@@ -23,6 +25,16 @@ int main()
         switch(opcion)
         {
             case 1:
+                movie = cargarPelicula();
+                agregoPelicula = agregarPelicula(movie);
+                if(agregoPelicula == 1)
+                {
+                    printf("\nAlta de pelicula OK");
+                }
+                else
+                {
+                    printf("\nNo se pudo agregar la pelicula");
+                }
                 break;
             case 2:
                 break;
