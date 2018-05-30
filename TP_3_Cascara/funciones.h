@@ -57,9 +57,6 @@ void limpiarPantalla(void);
  */
 void pausarEjecucion(void);
 
-int abrirArchivo(FILE* punteroArchivo, const char* pathArchivo, const char* modoArchivo);
-int cerrarArchivo(FILE* punteroArchivo);
-
 /** \brief Pide un número entero al usuario
  *
  * \param Mensaje a mostrar al usuario
@@ -117,7 +114,7 @@ int pedirEntero(char[], int, int);
  *
  */
 int validarEntero(int, int, int);
-EMovie cargarPelicula(void);
-int escribirPelicula(EMovie*, FILE*);
+EMovie cargarPelicula(int*);
+int buscarPelicula(const char*);
 
 #endif // FUNCIONES_H_INCLUDED

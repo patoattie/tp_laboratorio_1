@@ -9,6 +9,7 @@ int main()
     int opcion=0;
     EMovie movie;
     int agregoPelicula;
+    int existePelicula;
 
     while(seguir=='s')
     {
@@ -25,15 +26,22 @@ int main()
         switch(opcion)
         {
             case 1:
-                movie = cargarPelicula();
-                agregoPelicula = agregarPelicula(movie);
-                if(agregoPelicula == 1)
+                movie = cargarPelicula(&existePelicula);
+                if(existePelicula < 1)
                 {
-                    printf("\nAlta de pelicula OK");
+                    agregoPelicula = agregarPelicula(movie);
+                    if(agregoPelicula == 1)
+                    {
+                        printf("\nAlta de pelicula OK");
+                    }
+                    else
+                    {
+                        printf("\nNo se pudo agregar la pelicula");
+                    }
                 }
                 else
                 {
-                    printf("\nNo se pudo agregar la pelicula");
+                    printf("\nLa pelicula ya existe en el catalogo");
                 }
                 break;
             case 2:
