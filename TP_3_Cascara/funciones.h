@@ -121,5 +121,6 @@ int buscarPelicula(const char*, EMovie*);
 void pedirTituloPelicula(char*);
 int restaurarArchivoPeliculas(int);
 int listarPeliculas(EMovie*);
+int modificarPelicula(EMovie movie);
 
 #endif // FUNCIONES_H_INCLUDED

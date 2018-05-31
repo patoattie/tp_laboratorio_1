@@ -19,23 +19,22 @@ int agregarPelicula(EMovie movie)
     int cantidadEscrita;
     int cierraArchivo;
     FILE* pArchivoPeliculas = NULL;
-    EMovie* pMovie = &movie;
 
     pArchivoPeliculas = fopen(PATH_ARCHIVO_PELICULAS, MODO_APPEND_BINARIO);
     if(pArchivoPeliculas != NULL)
     {
-        cantidadEscrita = fwrite(pMovie, sizeof(movie), 1, pArchivoPeliculas);
+        cantidadEscrita = fwrite(&movie, sizeof(EMovie), 1, pArchivoPeliculas);
 
         if(cantidadEscrita == 1)
         {
             agregoPelicula = 1;
         }
-    }
 
-    cierraArchivo = fclose(pArchivoPeliculas); //Si el archivo es cerrado exitosamente se retorna un 0, en caso contrario se devuelve –1
-    if(cierraArchivo < 0)
-    {
-        printf("\nNo se pudo cerrar el archivo");
+        cierraArchivo = fclose(pArchivoPeliculas); //Si el archivo es cerrado exitosamente se retorna un 0, en caso contrario se devuelve –1
+        if(cierraArchivo < 0)
+        {
+            printf("\nNo se pudo cerrar el archivo");
+        }
     }
 
     return agregoPelicula;
@@ -220,12 +219,12 @@ int buscarPelicula(const char* tituloPelicula, EMovie* pMovie)
                 }
             }
         }
-    }
 
-    cierraArchivo = fclose(pArchivoPeliculas); //Si el archivo es cerrado exitosamente se retorna un 0, en caso contrario se devuelve –1
-    if(cierraArchivo < 0)
-    {
-        printf("\nNo se pudo cerrar el archivo");
+        cierraArchivo = fclose(pArchivoPeliculas); //Si el archivo es cerrado exitosamente se retorna un 0, en caso contrario se devuelve –1
+        if(cierraArchivo < 0)
+        {
+            printf("\nNo se pudo cerrar el archivo");
+        }
     }
 
     return retorno;
@@ -240,7 +239,6 @@ int borrarPelicula(EMovie movie)
     FILE* pArchivoPeliculas = NULL;
     FILE* pArchivoTemporal = NULL;
     EMovie temporal;
-    EMovie* pMovie = &temporal;
 
     pArchivoPeliculas = fopen(PATH_ARCHIVO_PELICULAS, MODO_LECTURA_BINARIO);
     pArchivoTemporal = fopen(PATH_ARCHIVO_TEMPORAL, MODO_ESCRITURA_BINARIO);
@@ -248,12 +246,12 @@ int borrarPelicula(EMovie movie)
     {
         while(!feof(pArchivoPeliculas))
         {
-            cantidadLeida = fread(pMovie, sizeof(EMovie), 1, pArchivoPeliculas);
+            cantidadLeida = fread(&temporal, sizeof(EMovie), 1, pArchivoPeliculas);
             if(cantidadLeida == 1)
             {
-                if(strcmp(movie.titulo, pMovie->titulo) != 0)
+                if(stricmp(movie.titulo, temporal.titulo) != 0)
                 {
-                    cantidadEscrita = fwrite(pMovie, sizeof(movie), 1, pArchivoTemporal);
+                    cantidadEscrita = fwrite(&temporal, sizeof(EMovie), 1, pArchivoTemporal);
                     if(cantidadEscrita < 1)
                     {
                         //Hubo un error en la escritura
@@ -271,25 +269,17 @@ int borrarPelicula(EMovie movie)
                 break;
             }
         }
-    }
 
-    cierraArchivo = fclose(pArchivoPeliculas); //Si el archivo es cerrado exitosamente se retorna un 0, en caso contrario se devuelve –1
-    if(cierraArchivo < 0)
-    {
-        printf("\nNo se pudo cerrar el archivo de peliculas");
-    }
-    else
-    {
-        pArchivoPeliculas = NULL;
-    }
-    cierraArchivo = fclose(pArchivoTemporal); //Si el archivo es cerrado exitosamente se retorna un 0, en caso contrario se devuelve –1
-    if(cierraArchivo < 0)
-    {
-        printf("\nNo se pudo cerrar el archivo temporal");
-    }
-    else
-    {
-        pArchivoTemporal = NULL;
+        cierraArchivo = fclose(pArchivoPeliculas); //Si el archivo es cerrado exitosamente se retorna un 0, en caso contrario se devuelve –1
+        if(cierraArchivo < 0)
+        {
+            printf("\nNo se pudo cerrar el archivo de peliculas");
+        }
+        cierraArchivo = fclose(pArchivoTemporal); //Si el archivo es cerrado exitosamente se retorna un 0, en caso contrario se devuelve –1
+        if(cierraArchivo < 0)
+        {
+            printf("\nNo se pudo cerrar el archivo temporal");
+        }
     }
 
     return borroPelicula;
@@ -366,13 +356,74 @@ int listarPeliculas(EMovie* pMovie)
                 }
             }
         }
-    }
 
-    cierraArchivo = fclose(pArchivoPeliculas); //Si el archivo es cerrado exitosamente se retorna un 0, en caso contrario se devuelve –1
-    if(cierraArchivo < 0)
-    {
-        printf("\nNo se pudo cerrar el archivo");
+        cierraArchivo = fclose(pArchivoPeliculas); //Si el archivo es cerrado exitosamente se retorna un 0, en caso contrario se devuelve –1
+        if(cierraArchivo < 0)
+        {
+            printf("\nNo se pudo cerrar el archivo");
+        }
     }
 
     return retorno;
+}
+
+int modificarPelicula(EMovie movie)
+{
+    int modificoPelicula = 0;
+    int cantidadLeida;
+    int cantidadEscrita;
+    int cierraArchivo;
+    FILE* pArchivoPeliculas = NULL;
+    FILE* pArchivoTemporal = NULL;
+    EMovie temporal;
+
+    pArchivoPeliculas = fopen(PATH_ARCHIVO_PELICULAS, MODO_LECTURA_BINARIO);
+    pArchivoTemporal = fopen(PATH_ARCHIVO_TEMPORAL, MODO_ESCRITURA_BINARIO);
+    if(pArchivoPeliculas != NULL && pArchivoTemporal != NULL)
+    {
+        while(!feof(pArchivoPeliculas))
+        {
+            cantidadLeida = fread(&temporal, sizeof(EMovie), 1, pArchivoPeliculas);
+            if(cantidadLeida == 1)
+            {
+                if(stricmp(movie.titulo, temporal.titulo) != 0)
+                {
+                    cantidadEscrita = fwrite(&temporal, sizeof(EMovie), 1, pArchivoTemporal);
+                    if(cantidadEscrita < 1)
+                    {
+                        //Hubo un error en la escritura
+                        break;
+                    }
+                }
+                else
+                {
+                    modificoPelicula = 1;
+                    cantidadEscrita = fwrite(&movie, sizeof(EMovie), 1, pArchivoTemporal);
+                    if(cantidadEscrita < 1)
+                    {
+                        //Hubo un error en la escritura
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                //Hubo un error en la lectura
+                break;
+            }
+        }
+
+        cierraArchivo = fclose(pArchivoPeliculas); //Si el archivo es cerrado exitosamente se retorna un 0, en caso contrario se devuelve –1
+        if(cierraArchivo < 0)
+        {
+            printf("\nNo se pudo cerrar el archivo de peliculas");
+        }
+        cierraArchivo = fclose(pArchivoTemporal); //Si el archivo es cerrado exitosamente se retorna un 0, en caso contrario se devuelve –1
+        if(cierraArchivo < 0)
+        {
+            printf("\nNo se pudo cerrar el archivo temporal");
+        }
+    }
+
+    return modificoPelicula;
 }

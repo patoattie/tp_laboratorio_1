@@ -8,12 +8,14 @@ int main()
     char seguir='s';
     int opcion=0;
     EMovie movie;
+    EMovie movieNueva;
     int agregoPelicula;
     int existePelicula;
     int borroPelicula;
     char tituloPelicula[TAM_TITULO];
     int operacionArchivo;
     int hayPeliculas;
+    int modificoPelicula;
 
     while(seguir=='s')
     {
@@ -23,7 +25,8 @@ int main()
         printf("2- Borrar pelicula\n");
         printf("3- Modificar pelicula\n");
         printf("4- Generar pagina web\n");
-        printf("5- Salir\n");
+        printf("5- Listar por pantalla\n");
+        printf("6- Salir\n");
 
         scanf("%d",&opcion);
 
@@ -80,10 +83,45 @@ int main()
                 }
                 break;
             case 3:
+                hayPeliculas = listarPeliculas(&movie);
+                if(hayPeliculas == 1)
+                {
+                    pedirTituloPelicula(tituloPelicula);
+                    existePelicula = buscarPelicula(tituloPelicula, &movie);
+                    if(existePelicula == 1)
+                    {
+                        cargarPelicula(tituloPelicula, &movieNueva);
+                        modificoPelicula = modificarPelicula(movieNueva);
+                        operacionArchivo = restaurarArchivoPeliculas(modificoPelicula);
+                        if(modificoPelicula == 1 && operacionArchivo == 0)
+                        {
+                            printf("\nModificacion de pelicula OK");
+                        }
+                        else
+                        {
+                            printf("\nNo se pudo modificar la pelicula");
+                        }
+                    }
+                    else
+                    {
+                        printf("\nLa pelicula no existe en el catalogo");
+                    }
+                }
+                else
+                {
+                    printf("\nNo hay peliculas en el catalogo");
+                }
                break;
             case 4:
                break;
             case 5:
+               hayPeliculas = listarPeliculas(&movie);
+               if(hayPeliculas != 1)
+               {
+                   printf("\nNo hay peliculas en el catalogo");
+               }
+               break;
+            case 6:
                 seguir = 'n';
                 break;
         }
