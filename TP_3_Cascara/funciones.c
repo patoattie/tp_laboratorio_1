@@ -299,7 +299,7 @@ void pedirTituloPelicula(char* tituloPelicula)
 {
     do
     {
-        pedirString("Ingrese titulo: ", tituloPelicula, TAM_TITULO);
+        pedirString("\nIngrese titulo: ", tituloPelicula, TAM_TITULO);
         if(strcmp(tituloPelicula, "") == 0)
         {
             printf("El dato es obligatorio, por favor reingrese\n");
@@ -336,4 +336,43 @@ int restaurarArchivoPeliculas(int borroPelicula)
     }
 
     return operacionArchivo;
+}
+
+int listarPeliculas(EMovie* pMovie)
+{
+    FILE* pArchivoPeliculas = NULL;
+    int retorno = -1;
+    int cantidadLeida;
+    int cierraArchivo;
+
+    pArchivoPeliculas = fopen(PATH_ARCHIVO_PELICULAS, MODO_LECTURA_BINARIO);
+    if(pArchivoPeliculas != NULL)
+    {
+        retorno = 0;
+
+        while(!feof(pArchivoPeliculas))
+        {
+            cantidadLeida = fread(pMovie, sizeof(EMovie), 1, pArchivoPeliculas);
+            if(cantidadLeida == 1)
+            {
+                printf("\n %s - %s - %d - %s - %d - %s", pMovie->titulo, pMovie->genero, pMovie->duracion, pMovie->descripcion, pMovie->puntaje, pMovie->linkImagen);
+                retorno = 1;
+            }
+            else
+            {
+                if(feof(pArchivoPeliculas))
+                {
+                    break;
+                }
+            }
+        }
+    }
+
+    cierraArchivo = fclose(pArchivoPeliculas); //Si el archivo es cerrado exitosamente se retorna un 0, en caso contrario se devuelve –1
+    if(cierraArchivo < 0)
+    {
+        printf("\nNo se pudo cerrar el archivo");
+    }
+
+    return retorno;
 }

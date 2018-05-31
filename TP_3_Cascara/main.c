@@ -13,6 +13,7 @@ int main()
     int borroPelicula;
     char tituloPelicula[TAM_TITULO];
     int operacionArchivo;
+    int hayPeliculas;
 
     while(seguir=='s')
     {
@@ -50,24 +51,32 @@ int main()
                 }
                 break;
             case 2:
-                pedirTituloPelicula(tituloPelicula);
-                existePelicula = buscarPelicula(tituloPelicula, &movie);
-                if(existePelicula == 1)
+                hayPeliculas = listarPeliculas(&movie);
+                if(hayPeliculas == 1)
                 {
-                    borroPelicula = borrarPelicula(movie);
-                    operacionArchivo = restaurarArchivoPeliculas(borroPelicula);
-                    if(borroPelicula == 1 && operacionArchivo == 0)
+                    pedirTituloPelicula(tituloPelicula);
+                    existePelicula = buscarPelicula(tituloPelicula, &movie);
+                    if(existePelicula == 1)
                     {
-                        printf("\nBaja de pelicula OK");
+                        borroPelicula = borrarPelicula(movie);
+                        operacionArchivo = restaurarArchivoPeliculas(borroPelicula);
+                        if(borroPelicula == 1 && operacionArchivo == 0)
+                        {
+                            printf("\nBaja de pelicula OK");
+                        }
+                        else
+                        {
+                            printf("\nNo se pudo borrar la pelicula");
+                        }
                     }
                     else
                     {
-                        printf("\nNo se pudo borrar la pelicula");
+                        printf("\nLa pelicula no existe en el catalogo");
                     }
                 }
                 else
                 {
-                    printf("\nLa pelicula no existe en el catalogo");
+                    printf("\nNo hay peliculas en el catalogo");
                 }
                 break;
             case 3:
