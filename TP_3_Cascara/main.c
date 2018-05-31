@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "funciones.h"
 
 int main()
@@ -33,7 +34,7 @@ int main()
         switch(opcion)
         {
             case 1:
-                pedirTituloPelicula(tituloPelicula);
+                pedirTituloPelicula(tituloPelicula, "Ingrese titulo a agregar: ");
                 existePelicula = buscarPelicula(tituloPelicula, &movie);
                 if(existePelicula < 1)
                 {
@@ -57,7 +58,7 @@ int main()
                 hayPeliculas = listarPeliculas(&movie);
                 if(hayPeliculas == 1)
                 {
-                    pedirTituloPelicula(tituloPelicula);
+                    pedirTituloPelicula(tituloPelicula, "Ingrese titulo a borrar: ");
                     existePelicula = buscarPelicula(tituloPelicula, &movie);
                     if(existePelicula == 1)
                     {
@@ -86,7 +87,7 @@ int main()
                 hayPeliculas = listarPeliculas(&movie);
                 if(hayPeliculas == 1)
                 {
-                    pedirTituloPelicula(tituloPelicula);
+                    pedirTituloPelicula(tituloPelicula, "Ingrese titulo a modificar: ");
                     existePelicula = buscarPelicula(tituloPelicula, &movie);
                     if(existePelicula == 1)
                     {

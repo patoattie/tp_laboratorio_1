@@ -4,7 +4,8 @@
 #define MODO_LECTURA_BINARIO "rb"
 #define MODO_ESCRITURA_BINARIO "wb"
 #define MODO_APPEND_BINARIO "ab"
-#define MODO_LECTURA_ESCRITURA_BINARIO "r+b"
+#define MODO_LECTURA_TEXTO "r"
+#define MODO_ESCRITURA_TEXTO "w"
 #define PATH_ARCHIVO_PELICULAS "peliculas.dat"
 #define PATH_ARCHIVO_TEMPORAL "peliculas.tmp"
 #define TAM_TITULO 20
@@ -41,7 +42,7 @@ int borrarPelicula(EMovie movie);
  *  @param lista la lista de peliculas a ser agregadas en el archivo.
  *  @param nombre el nombre para el archivo.
  */
-void generarPagina(EMovie lista[], char nombre[]);
+void generarPagina(EMovie* lista, char* nombre);
 
 /** \brief Llama a la rutina de Windows que limpia la pantalla de la consola.
  *
@@ -105,7 +106,7 @@ int validarEnteroDecimal(float);
  * \return El número ingresado por el usuario validado
  *
  */
-int pedirEntero(char[], int, int);
+int pedirEntero(char*, int, int);
 
 /** \brief Pide un número entero al usuario y lo valida
  *
@@ -118,7 +119,7 @@ int pedirEntero(char[], int, int);
 int validarEntero(int, int, int);
 void cargarPelicula(const char*, EMovie*);
 int buscarPelicula(const char*, EMovie*);
-void pedirTituloPelicula(char*);
+void pedirTituloPelicula(char*, char*);
 int restaurarArchivoPeliculas(int);
 int listarPeliculas(EMovie*);
 int modificarPelicula(EMovie movie);

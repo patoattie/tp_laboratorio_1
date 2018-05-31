@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "funciones.h"
 
 void limpiarPantalla(void)
@@ -111,7 +112,7 @@ int validarEnteroDecimal(float numero)
     return retorno;
 }
 
-int pedirEntero(char mensaje[], int minimo, int maximo)
+int pedirEntero(char* mensaje, int minimo, int maximo)
 {
     int numero;
     float ingreso;
@@ -285,11 +286,12 @@ int borrarPelicula(EMovie movie)
     return borroPelicula;
 }
 
-void pedirTituloPelicula(char* tituloPelicula)
+void pedirTituloPelicula(char* tituloPelicula, char* mensaje)
 {
     do
     {
-        pedirString("\nIngrese titulo: ", tituloPelicula, TAM_TITULO);
+        printf("\n");
+        pedirString(mensaje, tituloPelicula, TAM_TITULO);
         if(strcmp(tituloPelicula, "") == 0)
         {
             printf("El dato es obligatorio, por favor reingrese\n");
@@ -426,4 +428,65 @@ int modificarPelicula(EMovie movie)
     }
 
     return modificoPelicula;
+}
+
+void generarPagina(EMovie* lista, char* nombre)
+{
+    FILE* pArchivoPeliculas = NULL;
+    FILE* pArchivoHTML = NULL;
+    int cantidadLeida;
+    int cierraArchivo;
+    char confirma = 'S';
+
+    pArchivoHTML = fopen(nombre, MODO_LECTURA_TEXTO);
+    if(pArchivoHTML != NULL) //El archivo existe y pido confirmación de sobreescritura
+    {
+        do
+        {
+            printf("\nEl archivo %s ya existe. Desea sobreescribir? (S/N)");
+            scanf("%c", &confirma);
+            if(toupper(confirma) != 'S' && toupper(confirma) != 'N')
+            {
+                printf("\nOpcion no valida, debe ingresar S o N");
+            }
+        } while(toupper(confirma) != 'S' && toupper(confirma) != 'N');
+
+        cierraArchivo = fclose(pArchivoHTML); //Si el archivo es cerrado exitosamente se retorna un 0, en caso contrario se devuelve –1
+        if(cierraArchivo < 0)
+        {
+            printf("\nNo se pudo cerrar el archivo");
+            confirma = 'N';
+        }
+    }
+
+    if(confirma == 'S')
+    {
+        pArchivoPeliculas = fopen(PATH_ARCHIVO_PELICULAS, MODO_LECTURA_BINARIO);
+        pArchivoHTML = fopen(nombre, MODO_ESCRITURA_TEXTO);
+        if(pArchivoPeliculas != NULL && pArchivoHTML != NULL)
+        {
+            while(!feof(pArchivoPeliculas))
+            {
+                cantidadLeida = fread(lista, sizeof(EMovie), 1, pArchivoPeliculas);
+                if(cantidadLeida == 1)
+                {
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            cierraArchivo = fclose(pArchivoPeliculas); //Si el archivo es cerrado exitosamente se retorna un 0, en caso contrario se devuelve –1
+            if(cierraArchivo < 0)
+            {
+                printf("\nNo se pudo cerrar el archivo de peliculas");
+            }
+            cierraArchivo = fclose(pArchivoHTML); //Si el archivo es cerrado exitosamente se retorna un 0, en caso contrario se devuelve –1
+            if(cierraArchivo < 0)
+            {
+                printf("\nNo se pudo cerrar el archivo HTML");
+            }
+        }
+    }
 }
