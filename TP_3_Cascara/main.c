@@ -18,6 +18,7 @@ int main()
     int hayPeliculas;
     int modificoPelicula;
     char nombreHTML[50];
+    char archivoHTML[50];
 
     while(seguir=='s')
     {
@@ -123,8 +124,11 @@ int main()
                         printf("El dato es obligatorio, por favor reingrese\n");
                     }
                 } while(strcmp(nombreHTML, "") == 0);
-                strcat(nombreHTML, ".html"); //Le concateno la extensión.
-                generarPagina(&movie, nombreHTML);
+
+                strcpy(archivoHTML, PATH_HTML); //Asigno el path
+                strcat(archivoHTML, nombreHTML); //Le concateno el nombre.
+                strcat(archivoHTML, ".html"); //Le concateno la extensión.
+                generarPagina(&movie, archivoHTML);
                break;
             case 5:
                hayPeliculas = listarPeliculas(&movie);

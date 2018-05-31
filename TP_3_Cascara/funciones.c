@@ -438,7 +438,7 @@ void generarPagina(EMovie* lista, char* nombre)
     int cierraArchivo;
     char confirma = 'S';
     int cantidadEscrita;
-    char textoHTML[300];
+    char textoHTML[1000];
     char intChar[10];
 
     pArchivoHTML = fopen(nombre, MODO_LECTURA_TEXTO);
@@ -468,20 +468,25 @@ void generarPagina(EMovie* lista, char* nombre)
         pArchivoHTML = fopen(nombre, MODO_ESCRITURA_TEXTO);
         if(pArchivoPeliculas != NULL && pArchivoHTML != NULL)
         {
-            //Grabo cabecera de HTML5
+            //Grabo encabezado del HTML
             strcpy(textoHTML, "<!DOCTYPE html>\n");
-            cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
-            strcpy(textoHTML, "<html>\n");
-            cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
-            strcpy(textoHTML, "<head>\n");
-            cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
-            strcpy(textoHTML, "<title>TP3 Patricio Attie</title>\n");
-            cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
-            strcpy(textoHTML, "</head>\n");
-            cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
-            strcpy(textoHTML, "<body>\n");
-            cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
-            strcpy(textoHTML, "\n");
+            strcat(textoHTML, "<html>\n");
+            strcat(textoHTML, "<head>\n");
+            strcat(textoHTML, "<meta charset='utf-8'>\n");
+            strcat(textoHTML, "<meta http-equiv='X-UA-Compatible' content='IE=edge'>\n");
+            strcat(textoHTML, "<meta name='viewport' content='width=device-width, initial-scale=1'>\n");
+            strcat(textoHTML, "<title>Lista peliculas</title>\n");
+            strcat(textoHTML, "<link href='css/bootstrap.min.css' rel='stylesheet'>\n");
+            strcat(textoHTML, "<link href='css/custom.css' rel='stylesheet'>\n");
+            strcat(textoHTML, "<!--[if lt IE 9]>\n");
+            strcat(textoHTML, "<script src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js'></script>\n");
+            strcat(textoHTML, "<script src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js'></script>\n");
+            strcat(textoHTML, "<![endif]-->\n");
+            strcat(textoHTML, "</head>\n");
+            strcat(textoHTML, "<body>\n");
+            strcat(textoHTML, "<div class='container'>\n");
+            strcat(textoHTML, "<div class='row'>\n");
+            strcat(textoHTML, "\n");
             cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
 
             //Grabo datos de películas
@@ -491,48 +496,34 @@ void generarPagina(EMovie* lista, char* nombre)
                 if(cantidadLeida == 1)
                 {
                     strcpy(textoHTML, "<article class='col-md-4 article-intro'>\n");
-                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
-                    strcpy(textoHTML, "<a href='#'>\n");
-                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
-                    strcpy(textoHTML, "<img class='img-responsive img-rounded' src='");
+                    strcat(textoHTML, "<a href='#'>\n");
+                    strcat(textoHTML, "<img class='img-responsive img-rounded' src='");
                     strcat(textoHTML, lista->linkImagen);
                     strcat(textoHTML, "' alt=''>\n");
-                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
-                    strcpy(textoHTML, "</a>\n");
-                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
-                    strcpy(textoHTML, "<h3>\n");
-                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
-                    strcpy(textoHTML, "<a href='#'>");
+                    strcat(textoHTML, "</a>\n");
+                    strcat(textoHTML, "<h3>\n");
+                    strcat(textoHTML, "<a href='#'>");
                     strcat(textoHTML, lista->titulo);
                     strcat(textoHTML, "</a>\n");
-                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
-                    strcpy(textoHTML, "</h3>\n");
-                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
-                    strcpy(textoHTML, "<ul>\n");
-                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
-                    strcpy(textoHTML, "<li>Genero:");
+                    strcat(textoHTML, "</h3>\n");
+                    strcat(textoHTML, "<ul>\n");
+                    strcat(textoHTML, "<li>Genero:");
                     strcat(textoHTML, lista->genero);
                     strcat(textoHTML, "</li>\n");
-                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
-                    strcpy(textoHTML, "<li>Puntaje:");
+                    strcat(textoHTML, "<li>Puntaje:");
                     sprintf(intChar, "%d", lista->puntaje);
                     strcat(textoHTML, intChar);
                     strcat(textoHTML, "</li>\n");
-                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
-                    strcpy(textoHTML, "<li>Duracion:");
+                    strcat(textoHTML, "<li>Duracion:");
                     sprintf(intChar, "%d", lista->duracion);
                     strcat(textoHTML, intChar);
                     strcat(textoHTML, "</li>\n");
-                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
-                    strcpy(textoHTML, "</ul>\n");
-                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
-                    strcpy(textoHTML, "<p>");
+                    strcat(textoHTML, "</ul>\n");
+                    strcat(textoHTML, "<p>");
                     strcat(textoHTML, lista->descripcion);
                     strcat(textoHTML, "</p>\n");
-                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
-                    strcpy(textoHTML, "</article>\n");
-                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
-                    strcpy(textoHTML, "\n");
+                    strcat(textoHTML, "</article>\n");
+                    strcat(textoHTML, "\n");
                     cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
                 }
                 else
@@ -542,9 +533,14 @@ void generarPagina(EMovie* lista, char* nombre)
             }
 
             //Grabo cierre del HTML
-            strcpy(textoHTML, "</body>\n");
-            cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
-            strcpy(textoHTML, "</html>\n");
+            strcpy(textoHTML, "</div>\n");
+            strcat(textoHTML, "</div>\n");
+            strcat(textoHTML, "<script src='js/jquery-1.11.3.min.js'></script>\n");
+            strcat(textoHTML, "<script src='js/bootstrap.min.js'></script>\n");
+            strcat(textoHTML, "<script src='js/ie10-viewport-bug-workaround.js'></script>\n");
+            strcat(textoHTML, "<script src='js/holder.min.js'></script>\n");
+            strcat(textoHTML, "</body>\n");
+            strcat(textoHTML, "</html>\n");
             cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
 
             cierraArchivo = fclose(pArchivoPeliculas); //Si el archivo es cerrado exitosamente se retorna un 0, en caso contrario se devuelve –1

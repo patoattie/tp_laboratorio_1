@@ -8,6 +8,7 @@
 #define MODO_ESCRITURA_TEXTO "w"
 #define PATH_ARCHIVO_PELICULAS "peliculas.dat"
 #define PATH_ARCHIVO_TEMPORAL "peliculas.tmp"
+#define PATH_HTML "template/"
 #define TAM_TITULO 20
 #define TAM_GENERO 20
 #define TAM_DESCRIPCION 250
