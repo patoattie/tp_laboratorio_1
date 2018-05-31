@@ -119,5 +119,6 @@ int validarEntero(int, int, int);
 void cargarPelicula(const char*, EMovie*);
 int buscarPelicula(const char*, EMovie*);
 void pedirTituloPelicula(char*);
+int restaurarArchivoPeliculas(int);
 
 #endif // FUNCIONES_H_INCLUDED

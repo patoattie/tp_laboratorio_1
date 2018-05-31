@@ -194,6 +194,7 @@ int buscarPelicula(const char* tituloPelicula, EMovie* pMovie)
     FILE* pArchivoPeliculas = NULL;
     int retorno = -1;
     int cantidadLeida;
+    int cierraArchivo;
 
     pArchivoPeliculas = fopen(PATH_ARCHIVO_PELICULAS, MODO_LECTURA_BINARIO);
     if(pArchivoPeliculas != NULL)
@@ -219,6 +220,12 @@ int buscarPelicula(const char* tituloPelicula, EMovie* pMovie)
                 }
             }
         }
+    }
+
+    cierraArchivo = fclose(pArchivoPeliculas); //Si el archivo es cerrado exitosamente se retorna un 0, en caso contrario se devuelve –1
+    if(cierraArchivo < 0)
+    {
+        printf("\nNo se pudo cerrar el archivo");
     }
 
     return retorno;
@@ -247,14 +254,21 @@ int borrarPelicula(EMovie movie)
                 if(strcmp(movie.titulo, pMovie->titulo) != 0)
                 {
                     cantidadEscrita = fwrite(pMovie, sizeof(movie), 1, pArchivoTemporal);
+                    if(cantidadEscrita < 1)
+                    {
+                        //Hubo un error en la escritura
+                        break;
+                    }
+                }
+                else
+                {
+                    borroPelicula = 1;
                 }
             }
             else
             {
-                if(feof(pArchivoPeliculas))
-                {
-                    break;
-                }
+                //Hubo un error en la lectura
+                break;
             }
         }
     }
@@ -262,7 +276,20 @@ int borrarPelicula(EMovie movie)
     cierraArchivo = fclose(pArchivoPeliculas); //Si el archivo es cerrado exitosamente se retorna un 0, en caso contrario se devuelve –1
     if(cierraArchivo < 0)
     {
-        printf("\nNo se pudo cerrar el archivo");
+        printf("\nNo se pudo cerrar el archivo de peliculas");
+    }
+    else
+    {
+        pArchivoPeliculas = NULL;
+    }
+    cierraArchivo = fclose(pArchivoTemporal); //Si el archivo es cerrado exitosamente se retorna un 0, en caso contrario se devuelve –1
+    if(cierraArchivo < 0)
+    {
+        printf("\nNo se pudo cerrar el archivo temporal");
+    }
+    else
+    {
+        pArchivoTemporal = NULL;
     }
 
     return borroPelicula;
@@ -278,4 +305,35 @@ void pedirTituloPelicula(char* tituloPelicula)
             printf("El dato es obligatorio, por favor reingrese\n");
         }
     } while(strcmp(tituloPelicula, "") == 0);
+}
+
+int restaurarArchivoPeliculas(int borroPelicula)
+{
+    int operacionArchivo;
+
+    if(borroPelicula == 1)
+    {
+        //borro archivo de peliculas
+        operacionArchivo = remove(PATH_ARCHIVO_PELICULAS);
+        if(operacionArchivo != 0)
+        {
+            borroPelicula = 0;
+        }
+        else
+        {
+            //renombro archivo temporal que no contiene la pelicula eliminada, como nuevo archivo de peliculas
+            operacionArchivo = rename(PATH_ARCHIVO_TEMPORAL, PATH_ARCHIVO_PELICULAS);
+            if(operacionArchivo != 0)
+            {
+                borroPelicula = 0;
+            }
+        }
+    }
+    else
+    {
+        //No se efectuó el borrado, borro el archivo temporal
+        operacionArchivo = remove(PATH_ARCHIVO_TEMPORAL);
+    }
+
+    return operacionArchivo;
 }

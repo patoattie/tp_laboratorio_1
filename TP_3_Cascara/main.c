@@ -12,6 +12,7 @@ int main()
     int existePelicula;
     int borroPelicula;
     char tituloPelicula[TAM_TITULO];
+    int operacionArchivo;
 
     while(seguir=='s')
     {
@@ -54,7 +55,8 @@ int main()
                 if(existePelicula == 1)
                 {
                     borroPelicula = borrarPelicula(movie);
-                    if(borroPelicula == 1)
+                    operacionArchivo = restaurarArchivoPeliculas(borroPelicula);
+                    if(borroPelicula == 1 && operacionArchivo == 0)
                     {
                         printf("\nBaja de pelicula OK");
                     }
