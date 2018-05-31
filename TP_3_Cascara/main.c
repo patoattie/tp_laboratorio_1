@@ -17,6 +17,7 @@ int main()
     int operacionArchivo;
     int hayPeliculas;
     int modificoPelicula;
+    char nombreHTML[50];
 
     while(seguir=='s')
     {
@@ -114,6 +115,16 @@ int main()
                 }
                break;
             case 4:
+                do
+                {
+                    pedirString("Ingrese nombre del archivo html: ", nombreHTML, 50);
+                    if(strcmp(nombreHTML, "") == 0)
+                    {
+                        printf("El dato es obligatorio, por favor reingrese\n");
+                    }
+                } while(strcmp(nombreHTML, "") == 0);
+                strcat(nombreHTML, ".html"); //Le concateno la extensión.
+                generarPagina(&movie, nombreHTML);
                break;
             case 5:
                hayPeliculas = listarPeliculas(&movie);

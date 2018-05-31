@@ -437,13 +437,16 @@ void generarPagina(EMovie* lista, char* nombre)
     int cantidadLeida;
     int cierraArchivo;
     char confirma = 'S';
+    int cantidadEscrita;
+    char textoHTML[300];
+    char intChar[10];
 
     pArchivoHTML = fopen(nombre, MODO_LECTURA_TEXTO);
     if(pArchivoHTML != NULL) //El archivo existe y pido confirmación de sobreescritura
     {
         do
         {
-            printf("\nEl archivo %s ya existe. Desea sobreescribir? (S/N)");
+            printf("\nEl archivo %s ya existe. Desea sobreescribir? (S/N): ", nombre);
             scanf("%c", &confirma);
             if(toupper(confirma) != 'S' && toupper(confirma) != 'N')
             {
@@ -459,23 +462,90 @@ void generarPagina(EMovie* lista, char* nombre)
         }
     }
 
-    if(confirma == 'S')
+    if(toupper(confirma) == 'S')
     {
         pArchivoPeliculas = fopen(PATH_ARCHIVO_PELICULAS, MODO_LECTURA_BINARIO);
         pArchivoHTML = fopen(nombre, MODO_ESCRITURA_TEXTO);
         if(pArchivoPeliculas != NULL && pArchivoHTML != NULL)
         {
+            //Grabo cabecera de HTML5
+            strcpy(textoHTML, "<!DOCTYPE html>\n");
+            cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
+            strcpy(textoHTML, "<html>\n");
+            cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
+            strcpy(textoHTML, "<head>\n");
+            cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
+            strcpy(textoHTML, "<title>TP3 Patricio Attie</title>\n");
+            cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
+            strcpy(textoHTML, "</head>\n");
+            cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
+            strcpy(textoHTML, "<body>\n");
+            cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
+            strcpy(textoHTML, "\n");
+            cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
+
+            //Grabo datos de películas
             while(!feof(pArchivoPeliculas))
             {
                 cantidadLeida = fread(lista, sizeof(EMovie), 1, pArchivoPeliculas);
                 if(cantidadLeida == 1)
                 {
+                    strcpy(textoHTML, "<article class='col-md-4 article-intro'>\n");
+                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
+                    strcpy(textoHTML, "<a href='#'>\n");
+                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
+                    strcpy(textoHTML, "<img class='img-responsive img-rounded' src='");
+                    strcat(textoHTML, lista->linkImagen);
+                    strcat(textoHTML, "' alt=''>\n");
+                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
+                    strcpy(textoHTML, "</a>\n");
+                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
+                    strcpy(textoHTML, "<h3>\n");
+                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
+                    strcpy(textoHTML, "<a href='#'>");
+                    strcat(textoHTML, lista->titulo);
+                    strcat(textoHTML, "</a>\n");
+                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
+                    strcpy(textoHTML, "</h3>\n");
+                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
+                    strcpy(textoHTML, "<ul>\n");
+                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
+                    strcpy(textoHTML, "<li>Genero:");
+                    strcat(textoHTML, lista->genero);
+                    strcat(textoHTML, "</li>\n");
+                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
+                    strcpy(textoHTML, "<li>Puntaje:");
+                    sprintf(intChar, "%d", lista->puntaje);
+                    strcat(textoHTML, intChar);
+                    strcat(textoHTML, "</li>\n");
+                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
+                    strcpy(textoHTML, "<li>Duracion:");
+                    sprintf(intChar, "%d", lista->duracion);
+                    strcat(textoHTML, intChar);
+                    strcat(textoHTML, "</li>\n");
+                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
+                    strcpy(textoHTML, "</ul>\n");
+                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
+                    strcpy(textoHTML, "<p>");
+                    strcat(textoHTML, lista->descripcion);
+                    strcat(textoHTML, "</p>\n");
+                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
+                    strcpy(textoHTML, "</article>\n");
+                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
+                    strcpy(textoHTML, "\n");
+                    cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
                 }
                 else
                 {
                     break;
                 }
             }
+
+            //Grabo cierre del HTML
+            strcpy(textoHTML, "</body>\n");
+            cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
+            strcpy(textoHTML, "</html>\n");
+            cantidadEscrita = fwrite(textoHTML, sizeof(char), strlen(textoHTML), pArchivoHTML);
 
             cierraArchivo = fclose(pArchivoPeliculas); //Si el archivo es cerrado exitosamente se retorna un 0, en caso contrario se devuelve –1
             if(cierraArchivo < 0)
@@ -487,6 +557,16 @@ void generarPagina(EMovie* lista, char* nombre)
             {
                 printf("\nNo se pudo cerrar el archivo HTML");
             }
+
+            printf("\nSe genero la pagina web");
         }
+        else
+        {
+            printf("\nError al generar la pagina web");
+        }
+    }
+    else
+    {
+        printf("\nSe cancelo la generacion de la pagina web");
     }
 }
