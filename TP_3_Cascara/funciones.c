@@ -554,7 +554,7 @@ void generarPagina(EMovie* lista, char* nombre)
                 printf("\nNo se pudo cerrar el archivo HTML");
             }
 
-            printf("\nSe genero la pagina web");
+            printf("\nSe genero la pagina web: %s", nombre);
         }
         else
         {
