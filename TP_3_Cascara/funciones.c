@@ -347,7 +347,7 @@ int listarPeliculas(EMovie* pMovie)
             cantidadLeida = fread(pMovie, sizeof(EMovie), 1, pArchivoPeliculas);
             if(cantidadLeida == 1)
             {
-                printf("\n %s - %s - %d - %s - %d - %s", pMovie->titulo, pMovie->genero, pMovie->duracion, pMovie->descripcion, pMovie->puntaje, pMovie->linkImagen);
+                printf("\n %s - %s - %d - %s - %d - %s\n", pMovie->titulo, pMovie->genero, pMovie->duracion, pMovie->descripcion, pMovie->puntaje, pMovie->linkImagen);
                 retorno = 1;
             }
             else

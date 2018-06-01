@@ -140,6 +140,8 @@ int main()
             case 6:
                 seguir = 'n';
                 break;
+            default:
+                printf("\nOpcion no valida, debe ingresar del 1 al 6");
         }
 
         if(seguir=='s')

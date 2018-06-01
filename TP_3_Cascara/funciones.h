@@ -72,8 +72,8 @@ int pedirEnteroSinValidar(char*);
 /** \brief Pide una cadena de caracteres al usuario validando que no supere el tamaño definido
  *         para evitar desbordamiento
  *
- * \param char[] Mensaje a mostrar al usuario
- * \param char[] La cadena ingresada por el usuario y validada
+ * \param char* Mensaje a mostrar al usuario
+ * \param char* La cadena ingresada por el usuario y validada
  * \param int Longitud máxima de la cadena de caracteres
  * \return void
  *
@@ -82,7 +82,7 @@ void pedirString(char*, char*, int);
 
 /** \brief Valida que una cadena de caracteres no supere el tamaño definido para evitar desbordamiento
  *
- * \param char[] La cadena ingresada por el usuario
+ * \param char* La cadena ingresada por el usuario
  * \param int Longitud máxima de la cadena de caracteres
  * \return void
  *
@@ -118,11 +118,61 @@ int pedirEntero(char*, int, int);
  *
  */
 int validarEntero(int, int, int);
+
+/** \brief Puebla los campos de la estructura EMovie, título con el valor del parametro tituloPelicula,
+ *         el resto se le pide al usuario que los ingrese por teclado.
+ * \param char* const Título de la película a guardar en la estructura
+ * \param EMovie* Estructura cuyos campos serán cargados con valores.
+ * \return void
+ *
+ */
 void cargarPelicula(const char*, EMovie*);
+
+/** \brief Recorre secuencialmente el archivo de películas, buscando por el campo tituloPelicula de la estructura EMovie.
+ *         Interrumpe la búsqueda ante la primera coincidencia hallada.
+ * \param char* const Título a buscar
+ * \param EMovie* Estructura en la cual se van volcando los registros que se van leyendo del archivo.
+ * \return int Retorna 1 o 0 de acuerdo a si pudo hallar la pelicula o no
+ *
+ */
 int buscarPelicula(const char*, EMovie*);
+
+/** \brief Pide al usuario que ingrese un título de película por teclado
+ *
+ * \param char* Puntero a variable donde se guarda el título ingresado por el usuario.
+ * \param char* Mensaje a mostrar al usuario por pantalla.
+ * \return void
+ *
+ */
 void pedirTituloPelicula(char*, char*);
+
+/** \brief Si la función de borrado de película concluyó exitosamente (retorna 1), la presente función se encarga de
+ *            borrar el archivo permanente de películas (peliculas.dat) y renombrar el archivo temporal de películas
+ *            (peliculas.tmp), al cual no se le copió la película eliminada, para que tome el nombre del permanente.
+ *         Si la función de borrado de película no pudo eliminar la misma (retorna 0), la presente función se encarga de
+ *            borrar el archivo temporal de películas (peliculas.tmp) sin afectar el archivo permanente (peliculas.dat).
+ * \param int Estado que devolvió la función de borrado de película (0 o 1).
+ * \return int Retorna 1 o 0 de acuerdo a si pudo efectuar las operaciones sobre los archivos o no.
+ *
+ */
 int restaurarArchivoPeliculas(int);
+
+/** \brief Recorre secuencialmente el archivo de películas e imprime por pantalla los valores de todos los campos de la
+ *         estructura EMovie en cada uno de los registros recorridos.
+ * \param EMovie* Estructura en la cual se van volcando los registros que se van leyendo del archivo.
+ * \return int Retorna 1 o 0 de acuerdo a si hay datos para mostrar o no.
+ *
+ */
 int listarPeliculas(EMovie*);
+
+/** \brief Recorre secuencialmente el archivo permanente de películas, si el título leído es distinto al título de la estructura
+ *         EMovie que se le pasa por parámetro, entonces se escribe en el archivo temporal de películas. Si el título leído es
+ *         igual al título de la estructura EMovie que se le pasa por parámetro, entonces se escribe en el archivo temporal de
+ *         películas los datos de la estructura que viene por parámetro.
+ * \param movie EMovie Estructura que tiene cargados los datos de reemplazo de la película.
+ * \return int Retorna 1 o 0 de acuerdo a si pudo modificar la pelicula o no.
+ *
+ */
 int modificarPelicula(EMovie movie);
 
 #endif // FUNCIONES_H_INCLUDED
